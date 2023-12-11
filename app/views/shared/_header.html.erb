@@ -1,0 +1,124 @@
+<style type="text/css">
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+li {
+  list-style: none;
+}
+
+/*.container {
+  width: 1600px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100px;
+  box-shadow: 0px 35px 60px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+  position: fixed; /* Ensures the header stays in place */
+
+}*/
+
+.container {
+  width: 100%; /* Change to 100% */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 10vh;
+  box-shadow: 0px 35px 60px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+  position: fixed;
+  top: 0; /* Ensures the header stays at the top */
+  left: 0;
+  right: 0; /* Set the right property to 0 */
+}
+
+.header__logo {
+  text-transform: uppercase;
+
+}
+
+.header__menu {
+  display: flex;
+  justify-content: flex-end; /* Move menu to the right */
+  align-items: center;
+  column-gap: 54px;
+}
+
+.header__link {
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #6A6A6A;
+  text-decoration: none;
+  position: relative;
+}
+
+.header__link::after {
+  content: "";
+  width: 0px;
+  height: 2px;
+  background: blue;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  transition: 0.3s ease;
+}
+
+.header__link:hover::after {
+  width: 100%;
+  transition: 0.3s ease;
+}
+
+.header__link--logout {
+ background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+   /* Add underline to make it look like a link */
+  color: #6A6A6A; /* Change to your desired color */
+  font-size: 20px;
+}
+
+
+
+</style>
+<header class="header">
+  <div class="container">
+  <!--  <div class="header__logo">
+    <h1 class="header__logo__name">Logo</h1>
+  </div>  -->
+  <nav class="header__nav">
+    <ul class="header__menu">
+      <li class="header__item"><a href="#" class="header__link">Profile</a></li>
+      <li class="header__item"><a href="#" class="header__link">About</a></li>
+      <li class="header__item"><a href="#" class="header__link">Contact</a></li>
+    
+      <% if @current_user %>
+      <%= form_tag(destroy_user_session_path, method: :delete, class: "header__item") do %>
+      <%= submit_tag "Logout", class: "header__link header__link--logout" %>
+      <% end %>
+      <% else %>    
+      <li class="header__item"><a href="#" data-method="post" class="header__link">Contact</a></li>
+      <% end %>    
+    </ul>
+  </nav>
+  </div>
+</header>
+
+
+<div class="main"></div>

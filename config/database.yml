@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: admin
+  password: admin
+  host: localhost
+
+development:
+  <<: *default
+  database: payrolldatabase
+
+# test:
+#   <<: *default
+#   database: <database_name>_test
+
+# production:
+#   <<: *default
+#   database: <database_name>_production

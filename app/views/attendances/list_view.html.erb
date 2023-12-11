@@ -1,0 +1,58 @@
+<div id="calendar"></div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: ['dayGrid'],
+      events: <%= raw @events.to_json %>
+    });
+
+    calendar.render();
+  });
+</script>
+
+
+
+<%= form_tag list_view_path, method: :get, id: 'filter-form' do %>
+  <%= select_tag :employee_code, options_for_select(User.pluck(:employee_code).uniq, params[:employee_code]), prompt: 'Select Employee Code' %>
+  <%= select_month nil, { field_name: :month }, { prompt: 'Select Month' } %>
+  <%= select_year nil, { field_name: :year, start_year: Date.current.year - 5, end_year: Date.current.year + 5 }, { prompt: 'Select Year' } %>
+  <%= submit_tag 'Filter' %>
+<% end %>
+
+<table id="example" class="display" style="width:100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Employee Code</th>
+      <th>Time In</th>
+      <th>Time Out</th>
+      <th>Total Hours</th>
+      <th>Attendance Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @attendances.each do |attendance| %>
+      <tr>
+        <td><%= attendance.user.name %></td>
+        <td><%= attendance.user.employee_code %></td>
+        <td><%= attendance.time_in.strftime('%H:%M:%S') if attendance.time_in %></td>
+        <td><%= attendance.time_out.strftime('%H:%M:%S') if attendance.time_out %></td>
+        <td><%= calculate_working_hours(attendance) %></td>
+         <td>
+          <% total_hours = calculate_working_hours(attendance) %>
+          <%= total_hours == '00:00:00' ? 'Absent' : 'Present' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var pageNum = 10;
+    $('#example').DataTable().page(pageNum-1).draw('page');
+  });
+</script>

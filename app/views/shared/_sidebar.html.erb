@@ -1,0 +1,80 @@
+<style type="text/css">
+  <style type="text/css">
+  @import url('https://fonts.googleapis.com/css?family=Raleway:200');
+
+  body {
+    margin: 0;
+    background: #ecf0f1;
+  }
+  .sidebar-header-gap {
+    margin-bottom: 50px; /* Add a gap between the header and the sidebar */
+}
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 90vh;
+    width: 20vw;
+    border-right: 1px solid #D7DBDD;
+    font-family: raleway;
+    background-color: beige;
+    margin-top: 111px;
+    margin-right: 1655px;
+  }
+
+  .sidebar .nav-item {
+  margin-top: 10px; /* You can adjust the value based on your preference */
+}
+
+.sidebar .section .item {
+  margin-top: 10px; /* Adjust the margin-top value as needed */
+}
+
+.sidebar .nav-link {
+  padding: 10px 20px;
+  color: #471717;
+  font-size: 20px;
+}
+
+  .item {
+    padding: 10px 20px;
+    color: white;
+    font-size: 20px;
+  }
+
+  .section {
+    padding: 10px;
+  }
+</style>
+</style>
+<div class="container-fluid">
+    <div class="row">
+
+      <!-- Sidebar -->
+      <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <div class="sidebar-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Registered Employee', new_user_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Upload Attendance', new_attendance_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Attendance View', list_view_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Check Payslip', root_path, class: 'nav-link' %>
+            </li>
+            <!-- Add other sidebar links as needed -->
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+
