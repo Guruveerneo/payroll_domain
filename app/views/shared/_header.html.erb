@@ -104,11 +104,19 @@ li {
   </div>  -->
   <nav class="header__nav">
     <ul class="header__menu">
-      <li class="header__item"><a href="#" class="header__link">Profile</a></li>
-      <li class="header__item"><a href="#" class="header__link">About</a></li>
-      <li class="header__item"><a href="#" class="header__link">Contact</a></li>
-    
       <% if @current_user %>
+      <li class="header__item">
+              <%= link_to 'Registered Employee', new_user_path, class: 'header__link' %>
+            </li>
+      <li class="header__item">
+              <%= link_to 'Upload Attendance', new_attendance_path, class: 'header__link' %>
+            </li>
+      <li class="header__item">
+              <%= link_to 'Attendance View', list_view_path, class: 'header__link' %>
+            </li>
+      <li class="header__item">
+              <%= link_to 'Check Payslip', root_path, class: 'header__link' %>
+            </li>    
       <%= form_tag(destroy_user_session_path, method: :delete, class: "header__item") do %>
       <%= submit_tag "Logout", class: "header__link header__link--logout" %>
       <% end %>
@@ -119,6 +127,3 @@ li {
   </nav>
   </div>
 </header>
-
-
-<div class="main"></div>
