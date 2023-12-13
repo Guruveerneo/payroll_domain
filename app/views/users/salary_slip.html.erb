@@ -1,0 +1,23 @@
+<h1>Salary Slips</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Employee Code</th>
+      <th>Email</th>
+      <th>Current Salary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.employee_code %></td>
+        <td><%= user.email %></td>
+        <td><%= link_to 'View Salary Slip', view_salary_slip_details_user_path(user), class: 'salary-slip-link' %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+</table>

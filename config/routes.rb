@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
  root 'sessions#new'
-  resources :users
+  # resources :users
+
+ resources :users do
+  get 'salary_slip', on: :collection
+  get 'view_salary_slip_details', on: :member
+
+
+end
+  
   resources :sessions, only: [:new, :create, :destroy]
   resources :attendances, only: [:new, :create, :destroy]
   # resources :attendances do
@@ -12,6 +20,8 @@ Rails.application.routes.draw do
 
 get 'attendances/calendar_view', to: 'attendances#calendar_view', as: :calendar_view
 get 'attendances/list_view', to: 'attendances#list_view', as: :list_view
+post 'send_salary_slip_email', to: 'users#send_salary_slip_email', as: :send_salary_slip_email
+
 
 resources :attendances do
   get :list_view, on: :collection

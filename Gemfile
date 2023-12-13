@@ -75,6 +75,8 @@ gem 'pry'
 gem 'bcrypt'
 gem 'roo'
 gem 'chronic'
+gem 'toastr_rails'
+gem 'sassc'
 
 
 

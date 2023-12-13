@@ -1,21 +1,17 @@
 class ApplicationController < ActionController::Base
-	before_action :set_current_user
+  before_action :require_login
 
   private
 
-  def set_current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+  def require_login
+    unless current_user
+      flash[:alert] = 'You must be logged in to access this page.'
+      redirect_to new_session_path
+    end
   end
 
-#   module AttendancesHelper
-    
-#   def calculate_hours_worked(time_in, time_out)
-#     return 'N/A' if time_in.nil? || time_out.nil?
-
-#     hours_worked = ((time_out - time_in) / 3600).to_i
-#     "#{hours_worked} hours"
-#   end
-# end
-
-
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
+  end
+  helper_method :current_user
 end

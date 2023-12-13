@@ -1,20 +1,3 @@
-<div id="calendar"></div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: ['dayGrid'],
-      events: <%= raw @events.to_json %>
-    });
-
-    calendar.render();
-  });
-</script>
-
-
-
 <%= form_tag list_view_path, method: :get, id: 'filter-form' do %>
   <%= select_tag :employee_code, options_for_select(User.pluck(:employee_code).uniq, params[:employee_code]), prompt: 'Select Employee Code' %>
   <%= select_month nil, { field_name: :month }, { prompt: 'Select Month' } %>

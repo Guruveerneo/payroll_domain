@@ -1,211 +1,31 @@
-<style type="text/css">
-  :root {
-    --box-height: 40px;
-    --border-radius: 5px;
-    --space-between: 20px;
-    --font-size: 16px;
-
-    --color-0: #ffffff;
-    --color-1: #dcdcdd;
-    --color-2: #c5c3c6;
-    --color-3: #212529;
-    --color-4: #659b5e;
-    --color-5: #ce4257;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
-  }
-
-  input[type="checkbox"] {
-    position: relative;
-    width: 80px;
-    height: 40px;
-    -webkit-appearance: none;
-    appearance: none;
-    background: red;
-    outline: none;
-    border-radius: 2rem;
-    cursor: pointer;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-  }
-
-  input[type="checkbox"]::before {
-    content: "";
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #fff;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: 0.5s;
-  }
-
-  input[type="checkbox"]:checked::before {
-    transform: translateX(100%);
-    background: #fff;
-  }
-
-  input[type="checkbox"]:checked {
-    background: #00ed64;
-  }
-
-  body {
-    padding: 0 10px;
-    background-image: url("https://i.postimg.cc/BnhHF28S/nastuh-abootalebi-y-Wwob8kw-OCk-unsplash-modified.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center center;
-    width: 100%;
-    height: 100vh;
-    display: grid;
-    place-items: center;
-  }
-
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-between);
-  }
-
-  .col {
-    flex: 1 1 100%; /* Adjust width as needed */
-  }
-
-  #survey-container {
-    margin: 135px auto;
-    padding: 30px 20px;
-    max-width: 840px;
-    border-radius: calc(3 * var(--border-radius));
-    background: var(--color-1);
-    opacity: 0.98;
-  }
-
-  #title {
-    margin: 30px 0;
-    text-align: center;
-    font-family: "Kumbh Sans", sans-serif;
-    font-size: 50px;
-    text-transform: capitalize;
-    color: var(--color-3);
-  }
-
-  #description {
-    margin: 30px 0;
-    padding: 5px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    color: var(--color-3);
-  }
-
-  #survey-form {
-    padding: 30px;
-    padding-top: 20px;
-    border: none;
-    border-radius: calc(2 * var(--border-radius));
-  }
-
-  #survey-form * {
-    font-size: var(--font-size);
-  }
-
-  .row-label,
-  .row-input {
-    padding: 10px;
-    margin: 0;
-    height: var(--box-height);
-    width: 100%;
-    display: block;
-  }
-
-  .row-label {
-    color: var(--color-3);
-    font-weight: 600;
-  }
-
-  .row-label:not(:first-child) {
-    margin-top: var(--space-between);
-  }
-
-  .row-input:not(.small) {
-    background: white;
-    border: none;
-    border-radius: var(--border-radius);
-  }
-
-  .inline-label {
-    margin-left: 10px;
-    font-size: 14px;
-    color: var(--color-3);
-  }
-
-  .small {
-    height: calc(var(--box-height) * 0.75);
-  }
-
-  #comments {
-    padding: 10px;
-    margin: 0;
-    height: 120px;
-    width: 100%;
-    background: white;
-    border: none;
-    border-radius: var(--border-radius);
-    resize: none;
-  }
-
-  #submit {
-    margin-top: calc(2 * var(--space-between));
-    height: var(--box-height);
-    width: 100%;
-    background: var(--color-4);
-    border: none;
-    border-radius: var(--border-radius);
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-    text-transform: capitalize;
-  }
-
-  #submit:hover {
-    box-shadow: 0 0 2px var(--color-3);
-  }
-</style>
-
 <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700&family=Montserrat&display=swap" rel="stylesheet">
 
-<div id="survey-container">
-  <%= form_with(model: @user, url: users_path, local: true, id: "survey-form") do |form| %>
+<div id="survey-container_user">
+  <%= form_with(model: @user, url: users_path, local: true, id: "survey-form_user") do |form| %>
     <div class="row">
       <div class="col">
-        <%= form.label :name, "Name:", id: "name-label", class: "row-label" %>
-        <%= form.text_field :name, class: "row-input", placeholder: "Enter your name" %>
+        <%= form.label :name, "Name:", id: "name-label", class: "row-label-user" %>
+        <%= form.text_field :name, class: "row-input_user", placeholder: "Enter your name" %>
       </div>
       <div class="col">
-        <%= form.label :employee_code, "Employee Code:", id: "name-label", class: "row-label" %>
-        <%= form.text_field :employee_code, class: "row-input", placeholder: "Enter your code" %>
+        <%= form.label :employee_code, "Employee Code:", id: "name-label", class: "row-label-user" %>
+        <%= form.text_field :employee_code, class: "row-input_user", placeholder: "Enter your code" %>
       </div>
       <div class="col">
-        <%= form.label :email, "Email:", id: "name-label", class: "row-label" %>
-        <%= form.text_field :email, class: "row-input", placeholder: "Enter your email" %>
+        <%= form.label :email, "Email:", id: "name-label", class: "row-label-user" %>
+        <%= form.text_field :email, class: "row-input_user", placeholder: "Enter your email" %>
       </div>
       <div class="col">
-        <%= form.label :password, "Password:", id: "name-label", class: "row-label" %>
-        <%= form.text_field :password, class: "row-input", placeholder: "Enter your password" %>
+        <%= form.label :password, "Password:", id: "name-label", class: "row-label-user" %>
+        <%= form.text_field :password, class: "row-input_user", placeholder: "Enter your password" %>
       </div>
       <div class="col">
-        <%= form.label :current_salary, "Current Salary:", id: "name-label", class: "row-label" %>
-        <%= form.text_field :current_salary, class: "row-input", placeholder: "Enter your Salary" %>
+        <%= form.label :current_salary, "Current Salary:", id: "name-label", class: "row-label-user" %>
+        <%= form.text_field :current_salary, class: "row-input_user", placeholder: "Enter your Salary" %>
       </div>
       <div class="col">
-        <%= form.label :is_hr, "HR:", id: "name-label", class: "row-label" %>
-        <%= form.select :is_hr, options_for_select([['Yes', true], ['No', false]], @user.is_hr), {}, { class: 'row-input' } %>
+        <%= form.label :is_hr, "HR:", id: "name-label", class: "row-label-user" %>
+        <%= form.select :is_hr, options_for_select([['Yes', true], ['No', false]], @user.is_hr), {}, { class: 'row-input_user' } %>
       </div>
     </div>
     <%= form.submit "Submit", id: "submit" %>
