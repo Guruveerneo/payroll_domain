@@ -1,39 +1,44 @@
 <h1>Salary Slips</h1>
-  <table>
-    <tr>
-      <th>Details</th>
-      <th>Amount</th>
-    </tr>
-    <tr>
-      <td>Emp ID</td>
-      <td><%= @user.employee_code %></td>
-    </tr>
-    <tr>
-      <td>Current Salary</td>
-      <td><%= @user.current_salary %></td>
-    </tr>
-    <tr>
-      <td>Deducted Amount (Leave)</td>
-      <td><%= number_to_currency(@salary_details[:leave_deduction_amount]) %></td>
-    </tr>
-    <tr>
-      <td>Deducted Amount (Half Day)</td>
-      <td><%= number_to_currency(@salary_details[:half_day_deduction]) %></td>
-    </tr>
-    <tr>
-      <td>Total Salary</td>
-      <td><%= number_to_currency(@salary_details[:net_salary]) %></td>
-    </tr>
-    <tr>
-      <td>Leave Balance</td>
-      <td><%= @salary_details[:leaves_balance] %> days</td>
-    </tr>
-    <tr>
-      <td>No. of Working Days</td>
-      <td><%= @salary_details[:total_working_hours] / 8 %> days</td> 
-    </tr>
-    <!-- Add more rows for other details -->
-  </table>
+<table>
+  <tr>
+    <th>Details</th>
+    <th>Amount</th>
+  </tr>
+  <tr>
+    <td>Emp ID</td>
+    <td><%= @user.employee_code %></td>
+  </tr>
+  <tr>
+    <td>Current Salary</td>
+    <td><%= number_to_currency(@user.current_salary) %></td>
+  </tr>
+  <tr>
+    <td>No. of Working Days</td>
+    <td><%= @salary_details[:working_days_in_month] %> days</td>
+  </tr>
+  <tr>
+    <td>Employee's Working Days</td>
+    <td><%= @salary_details[:employee_working_days] %> days</td>
+  </tr>
+  <tr>
+    <td>Leaves Taken</td>
+    <td><%= @salary_details[:leave_days] %> days</td>
+  </tr>
+  <tr>
+    <td>Deducted Amount (Leave)</td>
+    <td><%= number_to_currency(@salary_details[:leave_deduction_amount]) %></td>
+  </tr>
+  <tr>
+    <td>Net Salary</td>
+    <td><%= number_to_currency(@salary_details[:net_salary]) %></td>
+  </tr>
+  <tr>
+    <td>Leave Balance</td>
+    <td><%= @salary_details[:leaves_balance] %> days</td>
+  </tr>
+  <!-- Add more rows for other details -->
+</table>
+
 
   <%= form_with(url: send_salary_slip_email_url, method: :post) do |form| %>
   <%= form.hidden_field :user_id, value: @user.id %>

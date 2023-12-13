@@ -1,14 +1,16 @@
-
-<%= form_with(model: @attendance, local: true) do |form| %>
- <div class="field-upload">
+<%= form_with(model: @attendance, local: true, html: { multipart: true }) do |form| %>
+  <div class="field-upload">
     <%= form.label :file %>
     <%= form.file_field :file %>
- </div>
+  </div>
 
- <div class="actions-upload">
+  <div class="actions-upload">
     <%= form.submit %>
- </div>
+  </div>
 <% end %>
+
+
+
 
 
 

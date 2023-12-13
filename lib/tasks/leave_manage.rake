@@ -3,6 +3,7 @@ namespace :leave_manage do
   task update_leaves: :environment do
     # Set the date range for the previous month
     today = Date.today
+    binding.pry
     start_date = (today - 1.months).beginning_of_month
     end_date = (today - 1.month).end_of_month.end_of_day
 

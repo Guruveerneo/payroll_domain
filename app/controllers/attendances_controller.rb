@@ -79,13 +79,7 @@ class AttendancesController < ApplicationController
 
   attendances = attendances.where(user_id: User.where(employee_code: employee_code).pluck(:id)) if employee_code.present?
 
-  # binding.pry
-
-  # puts "Month present: #{params['date']['month'].present?}"
-  # puts "Year present: #{params['date']['year'].present?}"
-  # puts "Params: #{params.inspect}"
-  
- if params['date']['month'].present? && params['date']['year'].present?
+ if params['date'].present? && params['date']['month'].present? && params['date']['year'].present?
     start_date = Date.new(params['date']['year'].to_i, params['date']['month'].to_i, 1)
     end_date = start_date.end_of_month
     attendances = attendances.where(date: start_date..end_date)
@@ -93,9 +87,6 @@ class AttendancesController < ApplicationController
 
   attendances
 end
-
-
-
 
   def attendance_params
     params.require(:attendance).permit(:file)
