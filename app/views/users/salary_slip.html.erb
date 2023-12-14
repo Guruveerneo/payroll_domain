@@ -1,5 +1,18 @@
 <h1>Salary Slips</h1>
 
+<%= form_tag(salary_slip_users_path, method: :get, id: 'salary-form') do %>
+  <label for="month">Select Month:</label>
+  <%= select_tag "month", options_for_select((1..12).map { |m| [Date::MONTHNAMES[m], m] }), class: 'month-dropdown' %>
+<% end %>
+
+<script>
+  $(document).ready(function() {
+    $('.month-dropdown').change(function() {
+      $('#salary-form').submit();
+    });
+  });
+</script>
+
 <table>
   <thead>
     <tr>
@@ -15,8 +28,7 @@
         <td><%= user.name %></td>
         <td><%= user.employee_code %></td>
         <td><%= user.email %></td>
-        <td><%= link_to 'View Salary Slip', view_salary_slip_details_user_path(user), class: 'salary-slip-link' %></td>
-
+        <td><%= link_to 'View Salary Slip', view_salary_slip_details_user_path(user, month: @selected_month), class: 'salary-slip-link' %></td>
       </tr>
     <% end %>
   </tbody>

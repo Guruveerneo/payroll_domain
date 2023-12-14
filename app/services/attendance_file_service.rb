@@ -28,7 +28,6 @@ class AttendanceFileService
     if user.present?
       date = parse_date(row['date'])
       # Check if an attendance entry already exists for the given date and user
-      binding.pry
       existing_attendance = Attendance.find_by(user_id: user.id, date: date)
 
       if existing_attendance.present?
@@ -46,7 +45,10 @@ class AttendanceFileService
         return
       end
 
-      is_present = parse_time(row['time_in'].to_i).present? || parse_time(row['time_out'].to_i).present?
+      # is_present = parse_time(row['time_in'].to_i).present? || parse_time(row['time_out'].to_i).present?
+      is_present = !(parse_time(row['time_in'].to_i) == '00:00:00' && parse_time(row['time_out'].to_i) == '00:00:00')
+
+
        # is_present = !is_weekend && !is_holiday && !@holiday_service.fixed_holiday?(date) && parse_time(row['time_in'].to_i).present? && parse_time(row['time_out'].to_i).present?
 
       attendance_data = {
@@ -57,7 +59,7 @@ class AttendanceFileService
         present: is_present,
       }
 
-      Attendance.create(attendance_data)
+    Attendance.create(attendance_data)
     else
       raise "Employee with code #{row['employee_code']} not found."
     end

@@ -35,49 +35,43 @@ class AttendancesController < ApplicationController
 
     user = User.find_by(employee_code: @employee_code)
 
+    if user
+      # Initialize events array
+      @events = []
 
-	    if user
-	    # Initialize events array
-	    @events = []
+      # Determine the last day of the selected month
+      last_day = Date.new(Date.current.year, @selected_month.to_i, -1).day
 
-	    # Determine the last day of the selected month
-	    last_day = Date.new(Date.current.year, @selected_month.to_i, -1).day
-
-	    # Iterate over days of the selected month and create events for each user_id
-	    (1..last_day).each do |day|
-	      date = Date.new(Date.current.year, @selected_month.to_i, day)
-	      @events << {
-	        title: "User ID: #{user.id}",
-	        start: date,
-	        className: 'event-user-id'
-	      }
-	    end
-
-	    # Rails.logger.info("Employee Code: #{@employee_code}, Selected Month: #{@selected_month}")
-	    # Rails.logger.info("Events: #{@events.inspect}")
-
-	     # render json: { events: @events }
-	  else
-	    Rails.logger.error("User not found for the given employee_code: #{@employee_code}")
-	    render json: { error: 'User not found for the given employee_code' }, status: :unprocessable_entity
-	  end
+      # Iterate over days of the selected month and create events for each user_id
+      (1..last_day).each do |day|
+        date = Date.new(Date.current.year, @selected_month.to_i, day)
+        @events << {
+          title: "User ID: #{user.id}",
+          start: date,
+          className: 'event-user-id'
+        }
+      end
+    else
+      Rails.logger.error("User not found for the given employee_code: #{@employee_code}")
+      render json: { error: 'User not found for the given employee_code' }, status: :unprocessable_entity
+    end
   end
 
   private
 
- def filter_attendances(employee_code, month, year)
-  attendances = Attendance.all
+  def filter_attendances(employee_code, month, year)
+    attendances = Attendance.all
 
-  attendances = attendances.where(user_id: User.where(employee_code: employee_code).pluck(:id)) if employee_code.present?
+    attendances = attendances.where(user_id: User.where(employee_code: employee_code).pluck(:id)) if employee_code.present?
 
- if params['date'].present? && params['date']['month'].present? && params['date']['year'].present?
-    start_date = Date.new(params['date']['year'].to_i, params['date']['month'].to_i, 1)
-    end_date = start_date.end_of_month
-    attendances = attendances.where(date: start_date..end_date)
+    if params['date'].present? && params['date']['month'].present? && params['date']['year'].present?
+      start_date = Date.new(params['date']['year'].to_i, params['date']['month'].to_i, 1)
+      end_date = start_date.end_of_month
+      attendances = attendances.where(date: start_date..end_date)
+    end
+
+    attendances
   end
-
-  attendances
-end
 
   def attendance_params
     params.require(:attendance).permit(:file)
