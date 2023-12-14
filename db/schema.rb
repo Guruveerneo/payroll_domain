@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_13_105432) do
     t.bigint "user_id", null: false
     t.datetime "date"
     t.datetime "time_in"
+    t.boolean "present"
     t.datetime "time_out"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
