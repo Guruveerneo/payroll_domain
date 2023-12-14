@@ -33,43 +33,34 @@ class AttendancesController < ApplicationController
     @employee_code = params[:employee_code] || @users.first&.employee_code
     @selected_month = params[:selected_month] || Date.current.month
 
-    # Fetch attendance data for the selected employee and month
-    @attendances = Attendance.where(
-      user_id: User.find_by(employee_code: @employee_code)&.id,
-      date: Date.new(Date.current.year, @selected_month.to_i)
-    )
+    user = User.find_by(employee_code: @employee_code)
 
-    @events = []
 
-    @attendances.each do |attendance|
-      if attendance.time_in == '00:00:00' && attendance.time_out == '00:00:00'
-        @events << {
-          title: 'Absent',
-          start: attendance.date,
-          className: 'event-absent'
-        }
-      else
-        @events << {
-          title: 'Present',
-          start: attendance.date,
-          className: 'event-present'
-        }
-      end
-    end
+	    if user
+	    # Initialize events array
+	    @events = []
 
-    # Get holiday events
-    holiday_service = HolidayService.new
-    holiday_events = @attendances.map do |attendance|
-      if holiday_service.holiday?(attendance.date)
-        {
-          title: holiday_service.holiday_name(attendance.date),
-          start: attendance.date,
-          className: 'event-holiday'
-        }
-      end
-    end.compact
+	    # Determine the last day of the selected month
+	    last_day = Date.new(Date.current.year, @selected_month.to_i, -1).day
 
-    @events += holiday_events
+	    # Iterate over days of the selected month and create events for each user_id
+	    (1..last_day).each do |day|
+	      date = Date.new(Date.current.year, @selected_month.to_i, day)
+	      @events << {
+	        title: "User ID: #{user.id}",
+	        start: date,
+	        className: 'event-user-id'
+	      }
+	    end
+
+	    # Rails.logger.info("Employee Code: #{@employee_code}, Selected Month: #{@selected_month}")
+	    # Rails.logger.info("Events: #{@events.inspect}")
+
+	     # render json: { events: @events }
+	  else
+	    Rails.logger.error("User not found for the given employee_code: #{@employee_code}")
+	    render json: { error: 'User not found for the given employee_code' }, status: :unprocessable_entity
+	  end
   end
 
   private
@@ -87,6 +78,9 @@ class AttendancesController < ApplicationController
 
   attendances
 end
+
+
+
 
   def attendance_params
     params.require(:attendance).permit(:file)

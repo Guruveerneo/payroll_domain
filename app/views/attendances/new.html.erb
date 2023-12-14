@@ -1,3 +1,6 @@
+<div class="flash-notice">
+  <%= flash[:notice] %>
+</div>
 <%= form_with(model: @attendance, local: true, html: { multipart: true }) do |form| %>
   <div class="field-upload">
     <%= form.label :file %>
@@ -8,6 +11,23 @@
     <%= form.submit %>
   </div>
 <% end %>
+
+<script>
+  $(document).ready(function(){
+    // Function to fade out flash messages
+    function fadeOutFlash(selector) {
+      setTimeout(function(){
+        $(selector).fadeOut('slow');
+      }, 3000);
+    }
+
+    // Fade out flash messages after page load
+    fadeOutFlash('.flash-notice');
+    fadeOutFlash('.flash-success');
+    fadeOutFlash('.flash-alert');
+  });
+</script>
+
 
 
 

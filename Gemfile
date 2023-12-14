@@ -77,6 +77,8 @@ gem 'roo'
 gem 'chronic'
 gem 'toastr_rails'
 gem 'sassc'
+gem 'jquery-rails'
+
 
 
 

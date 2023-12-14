@@ -27,58 +27,68 @@
 
   <div id="calendar"></div>
 
- <script>
+<script>
   function updateCalendar() {
-  var selectedEmployeeCode = $('#employeeCode').val();
-  var selectedMonth = $('#selectedMonth').val();
+    var selectedEmployeeCode = $('#employeeCode').val();
+    var selectedMonth = $('#selectedMonth').val();
 
-  $.ajax({
-    url: '/attendances/calendar_view',
-    method: 'GET',
-    data: { employee_code: selectedEmployeeCode, selected_month: selectedMonth },
-    dataType: 'json',
-    success: function(data) {
-      var attendanceData = Array.isArray(data.attendances) ? data.attendances : [];
-      var holidayData = Array.isArray(data.holidays) ? data.holidays : [];
-      var events = getCalendarEvents(attendanceData, holidayData);
+    $.ajax({
+      url: '/attendances/calendar_view',
+      method: 'GET',
+      data: { employee_code: selectedEmployeeCode, selected_month: selectedMonth },
+      dataType: 'json',
+      success: function(data) {
+        var events = data.events || [];
 
-      $('#calendar').fullCalendar('destroy');
+        $('#calendar').fullCalendar('destroy');
 
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,basicWeek,basicDay'
-        },
-        events: events,
-        dayClick: function(date) {
-          console.log('Holiday Data:', holidayData);
-          alert('Clicked on: ' + date.format());
-        }
-      });
-    },
-    error: function(error) {
-      console.error('Error fetching calendar data:', error);
+        $('#calendar').fullCalendar({
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,basicWeek,basicDay'
+          },
+          events: events,
+          dayClick: function(date) {
+            var user_id = findUserIdForDate(events, date.format());
+            if (user_id) {
+              alert('Clicked on: ' + date.format() + ' - User ID: ' + user_id);
+            }
+          }
+        });
+      },
+      error: function(error) {
+        console.error('Error fetching calendar data:', error);
+      }
+    });
+  }
+
+  function findUserIdForDate(events, clickedDate) {
+    for (var i = 0; i < events.length; i++) {
+      if (events[i].start === clickedDate) {
+        var user_id = events[i].title.split(":")[1].trim();
+        return user_id;
+      }
     }
-  });
-}
+    return null;
+  }
 
-$(document).ready(function() {
-  $('#calendar').fullCalendar({
-    header: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'month,basicWeek,basicDay'
-    },
-    events: [],
-    dayClick: function(date) {
-      console.log('Holiday Data:', holidayData);
-      alert('Clicked on: ' + date.format());
-    }
+  $(document).ready(function() {
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      events: [],
+      dayClick: function(date) {
+        alert('Clicked on: ' + date.format());
+      }
+    });
   });
-});
-
 </script>
+
+
 
 </body>
 </html>

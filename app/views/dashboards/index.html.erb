@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-        <h1>Welcome to My Webpage</h1>
-
+<div class="flash-notice">
+  <%= flash[:notice] %>
+</div>
+    <h1>Welcome to My Webpage</h1>
     <div class="content">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras luctus libero sed tortor dapibus, at commodo justo lobortis. Cras dapibus massa ut varius auctor. Vivamus ultrices lacus et libero consequat, et consequat metus consequat.</p>
         <p>Etiam posuere tortor id mauris faucibus, vitae pretium massa fermentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Curabitur imperdiet lacus et magna fermentum, vitae scelerisque tortor viverra.</p>
@@ -18,3 +20,18 @@
     </div>
 </body>
 </html>
+<script>
+  $(document).ready(function(){
+    // Function to fade out flash messages
+    function fadeOutFlash(selector) {
+      setTimeout(function(){
+        $(selector).fadeOut('slow');
+      }, 3000);
+    }
+
+    // Fade out flash messages after page load
+    fadeOutFlash('.flash-notice');
+    fadeOutFlash('.flash-success');
+    fadeOutFlash('.flash-alert');
+  });
+</script>

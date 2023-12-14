@@ -43,31 +43,31 @@ class UsersController < ApplicationController
   private
 
   def calculate_salary(user, attendance_data)
-  current_month = Date.today.month
-  last_month = Date.today.prev_month.month
-  start_date = Date.new(Date.today.year, last_month, 1).beginning_of_month
-  end_date = Date.new(Date.today.year, last_month, -1).end_of_month.end_of_day
+    current_month = Date.today.month
+    last_month = Date.today.prev_month.month
+    start_date = Date.new(Date.today.year, last_month, 1).beginning_of_month
+    end_date = Date.new(Date.today.year, last_month, -1).end_of_month.end_of_day
 
-  attendance_data = user.attendances.where(date: start_date..end_date)
+    attendance_data = user.attendances.where(date: start_date..end_date)
 
-  # total_working_hours = attendance_data.sum(&:total_working_hours)
-  base_salary = user.current_salary.to_i
+    # total_working_hours = attendance_data.sum(&:total_working_hours)
+    base_salary = user.current_salary.to_i
 
-   working_days_in_month = Attendance.where("EXTRACT(MONTH FROM date) = ? AND EXTRACT(DAY FROM date) NOT IN (?)", Date.parse('November').month, [ 4, 5, 11, 12, 14, 18, 19, 25, 26]).count
-  leave_days = Attendance.where("time_in::time = '00:00:00' AND time_out::time = '00:00:00'").distinct.count(:date)
-  employee_working_days = working_days_in_month - leave_days
+     working_days_in_month = Attendance.where("EXTRACT(MONTH FROM date) = ? AND EXTRACT(DAY FROM date) NOT IN (?)", Date.parse('November').month, [ 4, 5, 11, 12, 14, 18, 19, 25, 26]).count
+    leave_days = Attendance.where("time_in::time = '00:00:00' AND time_out::time = '00:00:00'").distinct.count(:date)
+    employee_working_days = working_days_in_month - leave_days
 
-  current_salary = user.current_salary.to_i
-  one_day_salary = current_salary / working_days_in_month.to_f
-  net_salary = employee_working_days*one_day_salary
+    current_salary = user.current_salary.to_i
+    one_day_salary = current_salary / working_days_in_month.to_f
+    net_salary = employee_working_days*one_day_salary
 
-  {
-    working_days_in_month: working_days_in_month,
-    employee_working_days: employee_working_days,
-    leave_days: leave_days,
-    one_day_salary: one_day_salary,
-    leaves_deduction: leave_days * one_day_salary,
-    net_salary: net_salary
+    {
+      working_days_in_month: working_days_in_month,
+      employee_working_days: employee_working_days,
+      leave_days: leave_days,
+      one_day_salary: one_day_salary,
+      leaves_deduction: leave_days * one_day_salary,
+      net_salary: net_salary
     # Add more calculations as needed
   }
 end

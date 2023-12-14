@@ -1,3 +1,17 @@
+
+<div class="flash-notice">
+  <%= flash[:notice] %>
+</div>
+
+<!-- For 'Logged out successfully!' -->
+<div class="flash-success">
+  <%= flash[:success] %>
+</div>
+
+<!-- For 'Invalid email or password or you do not have HR access.' -->
+<div class="flash-alert">
+  <%= flash[:alert] %>
+</div>
 <div class="login-form_new">
   
   <h2>Payroll Login</h2>
@@ -16,4 +30,18 @@
     Don't have an account? <%= link_to "Sign up", "#" %>
   </div>
 </div>
+<script>
+  $(document).ready(function(){
+    // Function to fade out flash messages
+    function fadeOutFlash(selector) {
+      setTimeout(function(){
+        $(selector).fadeOut('slow');
+      }, 1000);
+    }
 
+    // Fade out different flash messages
+    fadeOutFlash('.flash-notice');
+    fadeOutFlash('.flash-success');
+    fadeOutFlash('.flash-alert');
+  });
+</script>

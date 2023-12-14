@@ -17,6 +17,10 @@
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .login-form_new h2 {
@@ -347,3 +351,7 @@ th {
 
 /* In your stylesheet (e.g., application.css or application.scss) */
 
+.flash-notice {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}

@@ -1,6 +1,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@700&family=Montserrat&display=swap" rel="stylesheet">
-
+<div class="flash-notice">
+  <%= flash[:notice] %>
+</div>
 <div id="survey-container_user">
+  
   <%= form_with(model: @user, url: users_path, local: true, id: "survey-form_user") do |form| %>
     <div class="row">
       <div class="col">
@@ -31,3 +34,19 @@
     <%= form.submit "Submit", id: "submit" %>
   <% end %>
 </div>
+<script>
+  $(document).ready(function(){
+    // Function to fade out flash messages
+    function fadeOutFlash(selector) {
+      setTimeout(function(){
+        $(selector).fadeOut('slow');
+      }, 3000);
+    }
+
+    // Fade out flash messages after page load
+    fadeOutFlash('.flash-notice');
+    fadeOutFlash('.flash-success');
+    fadeOutFlash('.flash-alert');
+  });
+</script>
+
