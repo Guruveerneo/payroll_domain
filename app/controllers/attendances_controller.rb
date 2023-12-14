@@ -79,9 +79,6 @@ class AttendancesController < ApplicationController
   attendances
 end
 
-
-
-
   def attendance_params
     params.require(:attendance).permit(:file)
   end
