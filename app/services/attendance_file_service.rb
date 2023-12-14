@@ -48,9 +48,6 @@ class AttendanceFileService
       # is_present = parse_time(row['time_in'].to_i).present? || parse_time(row['time_out'].to_i).present?
       is_present = !(parse_time(row['time_in'].to_i) == '00:00:00' && parse_time(row['time_out'].to_i) == '00:00:00')
 
-
-       # is_present = !is_weekend && !is_holiday && !@holiday_service.fixed_holiday?(date) && parse_time(row['time_in'].to_i).present? && parse_time(row['time_out'].to_i).present?
-
       attendance_data = {
         user_id: user.id,
         date: parse_date(row['date']),

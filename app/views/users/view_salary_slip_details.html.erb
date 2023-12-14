@@ -39,7 +39,6 @@
   <!-- Add more rows for other details -->
 </table>
 
-
   <%= form_with(url: send_salary_slip_email_url, method: :post) do |form| %>
   <%= form.hidden_field :user_id, value: @user.id %>
   <%= form.submit 'Send Salary Slip via Email', class: 'btn btn-primary mt-3' %>
