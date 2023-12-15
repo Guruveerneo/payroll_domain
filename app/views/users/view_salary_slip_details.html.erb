@@ -42,6 +42,7 @@
 </body>
 </html>
 
+
 <%= form_with(url: send_salary_slip_email_user_url(@user), method: :post) do |form| %>
     <%= form.submit 'Send Salary Slip via Email', class: 'btn btn-primary mt-3' %>
 <% end %>
