@@ -6,7 +6,7 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
-
+debugger
     var calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
       events: [
@@ -15,7 +15,8 @@
             {
               title: '<%= event[:title] %>',
               start: '<%= event[:start] %>',
-              className: '<%= event[:className] %>'
+              className: '<%= event[:className] %>',
+              allDay: true
             },
         <% end %>
       ]
@@ -23,3 +24,4 @@
     calendar.render();
   });
 </script>
+

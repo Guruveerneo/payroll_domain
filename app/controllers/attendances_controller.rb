@@ -46,7 +46,7 @@ class AttendancesController < ApplicationController
       @attendances.each do |attendance|
         @events << {
           title: "User ID: #{user.id} - Hours Worked: #{attendance.present}", # Assuming there's a field 'hours_worked' in your Attendance model
-          start: attendance.date,
+          start: attendance.present,
           className: 'event-user-id'
         }
       end

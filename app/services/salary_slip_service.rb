@@ -23,19 +23,14 @@ class SalarySlipService
         working_hours = calculate_hrs(attendance&.time_in, attendance&.time_out)
         
         if attendance&.present? && working_hours >= 9
-          binding.pry
           employee_working_days += 1
         elsif attendance&.present? && working_hours < 9
-          binding.pry
           employee_working_days += 0.5
-          leave_days += 0.5 
+          leave_days += 0.5
+          @user.decrement!(:leave_balance) if @user.leave_balance > 0
         else
-          binding.pry
-          # Deduct leave days only if the user's leave balance is greater than 0
-          if @user.leave_balance > 0
-            leave_days += 1
-            @user.decrement!(:leave_balance)
-          end
+          @user.decrement!(:leave_balance) if @user.leave_balance > 0
+          leave_days =+ 1
         end
       end
     end
@@ -57,7 +52,7 @@ class SalarySlipService
     salary_details
   end
 
-  def send_salary_slip_email
+  def send_salary_slip_email(salary_details)
     salary_details = calculate_salary(Date.current.year, Date.current.month)
     SalaryMailer.send_salary_slip(@user, salary_details).deliver_now
     # Note: You might want to handle errors and flash messages in the controller
