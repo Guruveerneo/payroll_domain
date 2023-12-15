@@ -44,9 +44,10 @@ class AttendancesController < ApplicationController
 
       # Iterate over attendances and create events for each day
       @attendances.each do |attendance|
+        hours_worked = calculate_hours_worked(attendance)
         @events << {
-          title: "User ID: #{user.id} - Hours Worked: #{attendance.present}", # Assuming there's a field 'hours_worked' in your Attendance model
-          start: attendance.present,
+          title: "Hours: #{hours_worked}",
+          start: attendance.date,
           className: 'event-user-id'
         }
       end
@@ -70,6 +71,11 @@ class AttendancesController < ApplicationController
     end
 
     attendances
+  end
+
+  def calculate_hours_worked(attendance)
+    time_difference_seconds = (attendance.time_out - attendance.time_in).to_i
+    hours_worked = time_difference_seconds / 3600.0
   end
 
   def attendance_params

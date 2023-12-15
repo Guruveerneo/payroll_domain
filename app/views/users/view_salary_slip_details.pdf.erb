@@ -15,8 +15,12 @@
     <td><%= @user.employee_code %></td>
   </tr>
   <tr>
+    <td>Emp Code</td>
+    <td><%= @user.name %></td>
+  </tr>
+  <tr>
     <td>Current Salary</td>
-    <td><%= number_to_currency(@user.current_salary) %></td>
+    <td><%= number_to_currency(@user.current_salary, unit: '') %></td>
   </tr>
   <tr>
     <td>Total Working Days</td>
@@ -31,18 +35,9 @@
     <td><%= @salary_details[:leave_days] %> days</td>
   </tr>
   <tr>
-    <td>Deducted Amount (Leave)</td>
-    <td><%= number_to_currency(@salary_details[:leave_deduction_amount]) %></td>
-  </tr>
-  <tr>
     <td>Net Salary</td>
-    <td><%= number_to_currency(@salary_details[:net_salary]) %></td>
+    <td><%= number_to_currency(@salary_details[:net_salary], unit: '') %></td>
   </tr>
-  <tr>
-    <td>Leave Balance</td>
-    <td><%= @salary_details[:leaves_balance] %> days</td>
-  </tr>
-  <!-- Add more rows for other details -->
 </table>
 </body>
 </html>

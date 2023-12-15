@@ -3,25 +3,28 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css" />
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
+<% if @events.present? %>
+  <script>
+  $(document).ready(function() {
     var calendarEl = document.getElementById('calendar');
-debugger
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      events: [
-        <% @events.each do |event| %>
-          <%= puts event.inspect %>
+
+    if (calendarEl) {
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: [
+          <% @events.each do |event| %>
             {
               title: '<%= event[:title] %>',
-              start: '<%= event[:start] %>',
-              className: '<%= event[:className] %>',
-              allDay: true
+              start: '<%= event[:start].strftime('%Y-%m-%dT%H:%M:%S') %>',
+              className: '<%= event[:className] %>'
             },
-        <% end %>
-      ]
-    });
-    calendar.render();
+          <% end %>
+        ]
+      });
+
+      calendar.render();
+    }
   });
 </script>
+<% end %>
 

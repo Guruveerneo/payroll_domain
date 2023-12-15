@@ -20,7 +20,7 @@
   </tr>
   <tr>
     <td>Current Salary</td>
-    <td><%= number_to_currency(@user.current_salary) %></td>
+    <td><%= number_to_currency(@user.current_salary, unit: '') %></td>
   </tr>
   <tr>
     <td>Total Working Days</td>
@@ -36,7 +36,7 @@
   </tr>
   <tr>
     <td>Net Salary</td>
-    <td><%= number_to_currency(@salary_details[:net_salary]) %></td>
+    <td><%= number_to_currency(@salary_details[:net_salary], unit: '') %></td>
   </tr>
 </table>
 </body>

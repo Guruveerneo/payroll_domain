@@ -30,7 +30,7 @@ class SalarySlipService
           @user.decrement!(:leave_balance) if @user.leave_balance > 0
         else
           @user.decrement!(:leave_balance) if @user.leave_balance > 0
-          leave_days =+ 1
+          leave_days += 1
         end
       end
     end
