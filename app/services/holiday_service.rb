@@ -13,14 +13,13 @@ class HolidayService
       { name: "Dussera", date: Date.new(2023, 10, 24) },
       { name: "Lakshmi Puja", date: Date.new(2023, 11, 12) },
       { name: "Diwali New Year", date: Date.new(2023, 11, 14) },
-      { name: "Christmas", date: Date.new(2023, 12, 25) } # Add a comma here
+      { name: "Christmas", date: Date.new(2023, 12, 25) }
     ]
   end
 
   def holidays_in_month(year, month)
-  @holidays.select { |holiday| holiday[:date].year == year && holiday[:date].month == month }
-end
-
+    @holidays.select { |holiday| holiday[:date].year == year && holiday[:date].month == month }
+  end
 
   def holiday?(date)
     # Check if the given date is a holiday

@@ -5,3 +5,5 @@ import "controllers"
 //= require jquery3
 //= require popper
 //= require bootstrap
+//= require moment
+//= require fullcalendar@3.10.2

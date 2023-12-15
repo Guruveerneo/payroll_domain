@@ -36,18 +36,17 @@ class AttendancesController < ApplicationController
     user = User.find_by(employee_code: @employee_code)
 
     if user
+      # Fetch attendances for the selected user and previous month
+      @attendances = Attendance.where(user_id: user.id, date: Date.new(Date.current.year, @selected_month.to_i, 1).prev_month..Date.new(Date.current.year, @selected_month.to_i, -1).prev_month)
+
       # Initialize events array
       @events = []
 
-      # Determine the last day of the selected month
-      last_day = Date.new(Date.current.year, @selected_month.to_i, -1).day
-
-      # Iterate over days of the selected month and create events for each user_id
-      (1..last_day).each do |day|
-        date = Date.new(Date.current.year, @selected_month.to_i, day)
+      # Iterate over attendances and create events for each day
+      @attendances.each do |attendance|
         @events << {
-          title: "User ID: #{user.id}",
-          start: date,
+          title: "User ID: #{user.id} - Hours Worked: #{attendance.present}", # Assuming there's a field 'hours_worked' in your Attendance model
+          start: attendance.date,
           className: 'event-user-id'
         }
       end

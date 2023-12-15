@@ -39,3 +39,5 @@ end
   get '/dashboard', to: 'dashboards#index', as: 'dashboard'
   delete '/logout', to: 'sessions#destroy', as: :destroy_user_session
 end
+
+

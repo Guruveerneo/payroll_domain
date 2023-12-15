@@ -1,91 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" rel="stylesheet"/>
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-  
-  <title>Calendar View</title>
-</head>
-<body>
-  <label for="employeeCode">Select Employee Code:</label>
-  <select id="employeeCode" onchange="updateCalendar()">
-    <% @users.each do |user| %>
-      <option value="<%= user.employee_code %>" <%= 'selected' if user.employee_code == @employee_code %>><%= user.employee_code %></option>
-    <% end %>
-  </select>
-
-  <label for="selectedMonth">Select Month:</label>
-  <select id="selectedMonth" onchange="updateCalendar()">
-    <% (1..12).each do |month| %>
-      <option value="<%= month %>" <%= 'selected' if month.to_s == @selected_month.to_s %>><%= Date::MONTHNAMES[month] %></option>
-    <% end %>
-  </select>
-
-  <div id="calendar"></div>
+<h1>Attendance Calendar</h1>
+<div id='calendar'></div>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css" />
 
 <script>
-  function updateCalendar() {
-    var selectedEmployeeCode = $('#employeeCode').val();
-    var selectedMonth = $('#selectedMonth').val();
+  document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
 
-    $.ajax({
-      url: '/attendances/calendar_view',
-      method: 'GET',
-      data: { employee_code: selectedEmployeeCode, selected_month: selectedMonth },
-      dataType: 'json',
-      success: function(data) {
-        var events = data.events || [];
-
-        $('#calendar').fullCalendar('destroy');
-
-        $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,basicWeek,basicDay'
-          },
-          events: events,
-          dayClick: function(date) {
-            var user_id = findUserIdForDate(events, date.format());
-            if (user_id) {
-              alert('Clicked on: ' + date.format() + ' - User ID: ' + user_id);
-            }
-          }
-        });
-      },
-      error: function(error) {
-        console.error('Error fetching calendar data:', error);
-      }
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: [
+        <% @events.each do |event| %>
+          <%= puts event.inspect %>
+            {
+              title: '<%= event[:title] %>',
+              start: '<%= event[:start] %>',
+              className: '<%= event[:className] %>'
+            },
+        <% end %>
+      ]
     });
-  }
-
-  function findUserIdForDate(events, clickedDate) {
-    for (var i = 0; i < events.length; i++) {
-      if (events[i].start === clickedDate) {
-        var user_id = events[i].title.split(":")[1].trim();
-        return user_id;
-      }
-    }
-    return null;
-  }
-
-  $(document).ready(function() {
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,basicWeek,basicDay'
-      },
-      events: [],
-      dayClick: function(date) {
-        alert('Clicked on: ' + date.format());
-      }
-    });
+    calendar.render();
   });
 </script>
-</body>
-</html>

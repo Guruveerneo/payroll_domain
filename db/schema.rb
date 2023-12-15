@@ -10,19 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_13_105432) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_14_192017) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "attendances", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.datetime "date"
-    t.datetime "time_in"
     t.boolean "present"
+    t.datetime "time_in"
     t.datetime "time_out"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_attendances_on_user_id"
+  end
+
+  create_table "salary_slips", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "year"
+    t.integer "month"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "details"
+    t.index ["user_id"], name: "index_salary_slips_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,4 +48,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_13_105432) do
   end
 
   add_foreign_key "attendances", "users"
+  add_foreign_key "salary_slips", "users"
 end

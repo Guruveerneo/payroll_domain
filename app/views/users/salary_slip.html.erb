@@ -28,7 +28,14 @@
         <td><%= user.name %></td>
         <td><%= user.employee_code %></td>
         <td><%= user.email %></td>
-        <td><%= link_to 'View Salary Slip', view_salary_slip_details_user_path(user, month: @selected_month), class: 'salary-slip-link' %></td>
+        <td>
+      <% salary_slip_generated = SalarySlip.exists?(user: user, year: Date.current.year, month: @selected_month) %>
+      <% if salary_slip_generated %>
+        <%= link_to 'View Salary Slip', view_salary_slip_details_user_path(user, month: @selected_month), class: 'salary-slip-link' %>
+      <% else %>
+        <%= link_to 'View Salary Slip (PDF)', view_salary_slip_details_user_path(user, month: @selected_month, format: :pdf), class: 'salary-slip-link' %>
+      <% end %>
+    </td>
       </tr>
     <% end %>
   </tbody>

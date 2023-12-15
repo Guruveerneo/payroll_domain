@@ -56,7 +56,7 @@ class AttendanceFileService
         present: is_present,
       }
 
-    Attendance.create(attendance_data)
+      Attendance.create(attendance_data)
     else
       raise "Employee with code #{row['employee_code']} not found."
     end

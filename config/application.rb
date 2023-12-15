@@ -20,6 +20,8 @@ module PayrollSystem
     # config.eager_load_paths << Rails.root.join("extras")
     config.assets.enabled = true
     config.autoload_paths += %W(#{config.root}/app/helpers)
+    config.assets.enabled = true
+
 
 
   end

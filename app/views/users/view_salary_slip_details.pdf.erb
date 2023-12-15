@@ -11,7 +11,7 @@
     <th>Amount</th>
   </tr>
   <tr>
-    <td>Emp ID</td>
+    <td>Emp Code</td>
     <td><%= @user.employee_code %></td>
   </tr>
   <tr>
@@ -47,7 +47,3 @@
 </body>
 </html>
 
-  <%= form_with(url: send_salary_slip_email_url, method: :post) do |form| %>
-  <%= form.hidden_field :user_id, value: @user.id %>
-  <%= form.submit 'Send Salary Slip via Email', class: 'btn btn-primary mt-3' %>
-  <% end %>

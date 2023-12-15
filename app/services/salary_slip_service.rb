@@ -4,6 +4,9 @@ class SalarySlipService
   end
 
   def calculate_salary(year, month)
+    salary_slip = SalarySlip.find_by(user: @user, year: year, month: month)
+
+    return salary_slip.attributes.symbolize_keys[:details].symbolize_keys if salary_slip.present?
     working_days_in_month = 0
     employee_working_days = 0
     leave_days = 0
@@ -20,11 +23,19 @@ class SalarySlipService
         working_hours = calculate_hrs(attendance&.time_in, attendance&.time_out)
         
         if attendance&.present? && working_hours >= 9
+          binding.pry
           employee_working_days += 1
         elsif attendance&.present? && working_hours < 9
+          binding.pry
           employee_working_days += 0.5
+          leave_days += 0.5 
         else
-          leave_days += 1
+          binding.pry
+          # Deduct leave days only if the user's leave balance is greater than 0
+          if @user.leave_balance > 0
+            leave_days += 1
+            @user.decrement!(:leave_balance)
+          end
         end
       end
     end
@@ -33,13 +44,17 @@ class SalarySlipService
     one_day_salary = working_days_in_month.zero? ? 0 : current_salary / working_days_in_month.to_f
     net_salary = one_day_salary * employee_working_days
 
-    {
+    salary_details = {
       working_days_in_month: working_days_in_month,
       employee_working_days: employee_working_days,
       leave_days: leave_days,
       one_day_salary: one_day_salary,
-      net_salary: net_salary
+      net_salary: net_salary,
+      leaves_balance: @user.leave_balance
     }
+    @user.salary_slips.create(year: year, month: month, details: salary_details)
+
+    salary_details
   end
 
   def send_salary_slip_email

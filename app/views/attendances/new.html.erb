@@ -6,7 +6,7 @@
     <%= form.label :file %>
     <%= form.file_field :file %>
   </div>
-
+  
   <div class="actions-upload">
     <%= form.submit %>
   </div>
@@ -14,7 +14,6 @@
 
 <script>
   $(document).ready(function(){
-    // Function to fade out flash messages
     function fadeOutFlash(selector) {
       setTimeout(function(){
         $(selector).fadeOut('slow');
