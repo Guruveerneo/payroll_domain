@@ -1,4 +1,10 @@
-<h1>Attendance Calendar</h1>
+<%= form_tag calendar_view_path, method: :get, id: 'filter-form' do %>
+  <%= select_tag :employee_code, options_for_select(User.pluck(:employee_code).uniq, params[:employee_code]), prompt: 'Select Employee Code', onchange: 'updateCalendar()' %>
+  <%= select_month params[:selected_month], { field_name: :selected_month }, { prompt: 'Select Month' } %>
+  <%= select_year params[:year], { field_name: :year, start_year: Date.current.year - 3, end_year: Date.current.year + 3 }, { prompt: 'Select Year' } %>
+  <%= submit_tag 'Filter' %>
+<% end %>
+
 <div id='calendar'></div>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css" />

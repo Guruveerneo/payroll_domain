@@ -26,6 +26,7 @@ class AttendanceFileService
     user = User.find_by(employee_code: row['employee_code'])
 
     if user.present?
+      binding.pry
       date = parse_date(row['date'])
       # Check if an attendance entry already exists for the given date and user
       existing_attendance = Attendance.find_by(user_id: user.id, date: date)

@@ -81,10 +81,4 @@ gem 'jquery-rails'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'fullcalendar-rails'
-
-
-
-
-
-
-
+gem 'will_paginate'

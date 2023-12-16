@@ -344,3 +344,21 @@ th {
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
+
+ #salary-form {
+  padding-left: 75%;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+/* Optional: Add styling to the dropdown itself for a better appearance */
+.month-dropdown {
+  padding: 5px;
+  border: 2px solid #ccc;
+  border-radius: 7px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}

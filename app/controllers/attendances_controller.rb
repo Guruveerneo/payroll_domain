@@ -25,8 +25,11 @@ class AttendancesController < ApplicationController
   end
 
   def list_view
-    @attendances = filter_attendances(params[:employee_code], params[:month], params[:year])
-  end
+    # @attendances = filter_attendances(params[:employee_code], params[:month], params[:year])
+    # def list_view
+  	@attendances = filter_attendances(params[:employee_code], params[:month], params[:year]).paginate(page: params[:page], per_page: 15)
+		end
+
 
   def calendar_view
     @users = User.all
@@ -37,7 +40,8 @@ class AttendancesController < ApplicationController
 
     if user
       # Fetch attendances for the selected user and previous month
-      @attendances = Attendance.where(user_id: user.id, date: Date.new(Date.current.year, @selected_month.to_i, 1).prev_month..Date.new(Date.current.year, @selected_month.to_i, -1).prev_month)
+      # @attendances = Attendance.where(user_id: user.id, date: Date.new(Date.current.year, @selected_month.to_i, 1).prev_month..Date.new(Date.current.year, @selected_month.to_i, -1).prev_month)
+      @attendances = Attendance.where(user_id: user.id,date: Date.new(Date.current.year, 1, 1)..Date.new(Date.current.year, 12, 31))
 
       # Initialize events array
       @events = []
@@ -55,7 +59,14 @@ class AttendancesController < ApplicationController
       Rails.logger.error("User not found for the given employee_code: #{@employee_code}")
       render json: { error: 'User not found for the given employee_code' }, status: :unprocessable_entity
     end
-  end
+
+		   respond_to do |format|
+		    format.html
+		    format.json do
+		      render json: { events: @events }
+		    end
+		  end
+		end
 
   private
 

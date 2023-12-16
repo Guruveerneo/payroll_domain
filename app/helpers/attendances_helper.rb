@@ -1,4 +1,3 @@
-# app/helpers/attendances_helper.rb
 module AttendancesHelper
   def calculate_working_hours(attendance)
     return nil unless attendance.time_in && attendance.time_out

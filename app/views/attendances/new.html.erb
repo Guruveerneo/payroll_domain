@@ -1,21 +1,22 @@
 <div class="flash-notice">
   <%= flash[:notice] %>
 </div>
+
 <%= form_with(model: @attendance, local: true, html: { multipart: true }) do |form| %>
   <div class="field-upload">
     <%= form.label :file %>
-    <%= form.file_field :file %>
+    <%= form.file_field :file, id: 'file-input' %>
   </div>
   
-  <div class="actions-upload">
-    <%= form.submit %>
-  </div>
+  <div class="actions-upload" id="submit-button-container">
+  <%= form.submit({ style: 'display: none;', id: 'submit-button' }) %>
+</div>
 <% end %>
 
 <script>
-  $(document).ready(function(){
+  $(document).ready(function() {
     function fadeOutFlash(selector) {
-      setTimeout(function(){
+      setTimeout(function() {
         $(selector).fadeOut('slow');
       }, 3000);
     }
@@ -24,13 +25,14 @@
     fadeOutFlash('.flash-notice');
     fadeOutFlash('.flash-success');
     fadeOutFlash('.flash-alert');
+
+    // Show/hide submit button based on file selection
+    $('#file-input').on('change', function() {
+      if ($(this).val()) {
+        $('#submit-button').show();
+      } else {
+        $('#submit-button').hide();
+      }
+    });
   });
 </script>
-
-
-
-
-
-
-
-
