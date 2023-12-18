@@ -4,7 +4,7 @@ class SalaryMailer < ApplicationMailer
     @salary_details = salary_details
 
      mail(to: @user.email, subject: 'Your Salary Slip') do |format|
-      format.html { render html: render_to_string('users/view_salary_slip_details', layout: false) }
+      format.html { render html: render_to_string('users/salary_slip_email', layout: false) }
    end
 end
 end

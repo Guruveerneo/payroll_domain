@@ -55,7 +55,6 @@ class SalarySlipService
   def send_salary_slip_email(salary_details)
     salary_details = calculate_salary(Date.current.year, Date.current.month)
     SalaryMailer.send_salary_slip(@user, salary_details).deliver_now
-    # Note: You might want to handle errors and flash messages in the controller
   end
 
   private

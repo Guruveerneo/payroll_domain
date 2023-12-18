@@ -42,10 +42,12 @@
         <td><%= user.email %></td>
         <td>
           <% salary_slip_generated = SalarySlip.exists?(user: user, year: Date.current.year, month: @selected_month) %>
+          <% salary_attendance_present = Attendance.where('user_id = ? AND EXTRACT(MONTH FROM date) = ?', user.id, @selected_month).exists? %>
+        
           <% if salary_slip_generated %>
-            <%= link_to 'View Salary Slip', view_salary_slip_details_user_path(user, month: @selected_month), class: 'salary-slip-link' %>
+            <%= link_to 'View Salary Slip', view_salary_slip_details_user_path(user, month: @selected_month), class: 'salary-slip-link'  %>
           <% else %>
-            <%= link_to 'View Salary Slip (PDF)', view_salary_slip_details_user_path(user, month: @selected_month, format: :pdf), class: 'salary-slip-link' %>
+            <%= link_to 'Generate Salary (PDF)', view_salary_slip_details_user_path(user, month: @selected_month, format: :pdf), class: 'salary-slip-link', target: '_blank' if salary_attendance_present.present? %>
           <% end %>
         </td>
       </tr>
