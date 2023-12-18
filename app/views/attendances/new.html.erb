@@ -21,12 +21,10 @@
       }, 3000);
     }
 
-    // Fade out flash messages after page load
     fadeOutFlash('.flash-notice');
     fadeOutFlash('.flash-success');
     fadeOutFlash('.flash-alert');
 
-    // Show/hide submit button based on file selection
     $('#file-input').on('change', function() {
       if ($(this).val()) {
         $('#submit-button').show();

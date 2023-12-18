@@ -30,8 +30,6 @@ class UsersController < ApplicationController
     year = Date.current.year
     month = params[:month].to_i || 12
     @holiday_service = HolidayService.new
-    # @salary_slip_generated = SalarySlip.exists?(user: @user, year: year, month: month)
-
     salary_service = SalarySlipService.new(@user)
     @salary_details = salary_service.calculate_salary(year, month)
 
@@ -48,7 +46,6 @@ class UsersController < ApplicationController
     salary_service = SalarySlipService.new(@user)
     salary_details = salary_service.calculate_salary(Date.current.year, Date.current.month)
     salary_service.send_salary_slip_email(salary_details)
-
     flash[:notice] = 'Salary slip sent successfully!'
     redirect_to salary_slip_users_path
   end

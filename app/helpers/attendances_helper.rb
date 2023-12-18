@@ -7,7 +7,6 @@ module AttendancesHelper
     hours, remainder = total_seconds.divmod(3600)
     minutes, seconds = remainder.divmod(60)
 
-    # Format the total working hours as HH:MM:SS
     "#{format('%02d', hours)}:#{format('%02d', minutes)}:#{format('%02d', seconds)}"
   end
 end

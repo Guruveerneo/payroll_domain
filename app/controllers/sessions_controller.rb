@@ -12,7 +12,6 @@ class SessionsController < ApplicationController
       redirect_to dashboard_path
     else
       flash[:alert] = 'Invalid email or password or you do not have HR access.'
-      # render 'new'
       redirect_to new_session_path
     end
   end
@@ -21,7 +20,5 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     flash[:notice] = 'Logged out successfully!'
     redirect_to root_path
-
   end
-
 end

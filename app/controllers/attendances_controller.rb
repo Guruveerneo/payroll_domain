@@ -25,11 +25,8 @@ class AttendancesController < ApplicationController
   end
 
   def list_view
-    # @attendances = filter_attendances(params[:employee_code], params[:month], params[:year])
-    # def list_view
   	@attendances = filter_attendances(params[:employee_code], params[:month], params[:year]).paginate(page: params[:page], per_page: 15)
 		end
-
 
   def calendar_view
     @users = User.all
@@ -39,14 +36,9 @@ class AttendancesController < ApplicationController
     user = User.find_by(employee_code: @employee_code)
 
     if user
-      # Fetch attendances for the selected user and previous month
-      # @attendances = Attendance.where(user_id: user.id, date: Date.new(Date.current.year, @selected_month.to_i, 1).prev_month..Date.new(Date.current.year, @selected_month.to_i, -1).prev_month)
       @attendances = Attendance.where(user_id: user.id,date: Date.new(Date.current.year, 1, 1)..Date.new(Date.current.year, 12, 31))
 
-      # Initialize events array
       @events = []
-
-      # Iterate over attendances and create events for each day
       @attendances.each do |attendance|
         hours_worked = calculate_hours_worked(attendance)
         @events << {
@@ -72,7 +64,6 @@ class AttendancesController < ApplicationController
 
   def filter_attendances(employee_code, month, year)
     attendances = Attendance.all
-
     attendances = attendances.where(user_id: User.where(employee_code: employee_code).pluck(:id)) if employee_code.present?
 
     if params['date'].present? && params['date']['month'].present? && params['date']['year'].present?

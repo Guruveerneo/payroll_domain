@@ -61,7 +61,6 @@ class SalarySlipService
 
   def calculate_hrs(time_in, time_out)
     return 0 if time_in.nil? || time_out.nil?
-
     time_difference_seconds = (time_out - time_in).to_i
     hours_worked = time_difference_seconds / 3600.0
   end

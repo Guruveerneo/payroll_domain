@@ -23,9 +23,7 @@ class HolidayService
 
   def holiday?(date)
     # Check if the given date is a holiday
-    # @holidays.any? { |holiday| holiday[:date] == date }
     @holidays.any? { |holiday| holiday[:date].to_date == date.to_date }
-
   end
 
   def holiday_name(date)
