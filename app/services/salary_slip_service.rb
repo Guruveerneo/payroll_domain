@@ -52,11 +52,6 @@ class SalarySlipService
     salary_details
   end
 
-  def send_salary_slip_email(salary_details)
-    salary_details = calculate_salary(Date.current.year, Date.current.month)
-    SalaryMailer.send_salary_slip(@user, salary_details).deliver_now
-  end
-
   private
 
   def calculate_hrs(time_in, time_out)

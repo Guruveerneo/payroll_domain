@@ -43,9 +43,11 @@ class UsersController < ApplicationController
 
   def send_salary_slip_email
     @user = User.find(params[:id])
+    year = Date.current.year
+    month = params[:month].to_i || 12
     salary_service = SalarySlipService.new(@user)
-    salary_details = salary_service.calculate_salary(Date.current.year, Date.current.month)
-    salary_service.send_salary_slip_email(salary_details)
+    salary_details = salary_service.calculate_salary(year, month)
+    SalaryMailer.send_salary_slip(@user, salary_details).deliver_now
     flash[:notice] = 'Salary slip sent successfully!'
     redirect_to salary_slip_users_path
   end
